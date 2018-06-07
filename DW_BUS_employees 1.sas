@@ -1,3 +1,6 @@
+
+/* der mangler et comment her, test  */
+
 proc sql;
    create table work.Bus_employee_Base;
    select
@@ -30,4 +33,3 @@ proc sql;
       , bb.dw_bus_key as BornMonth
  from nooyehe.s_h_ork_employee_info as aa left join nooyehe.h_employee as bb
    on aa.h_key = bb.h_key;
-
