@@ -39,7 +39,7 @@ Næste skridt:
 /* %INCLUDE "&ProgramPath.DW_RAW_company_area.sas" /lrecl=10000; */
 /* %INCLUDE "&ProgramPath.Dw_RAW_Departments.sas" /lrecl=10000; */
 /* %INCLUDE "&ProgramPath.Dw_absence_codes.sas" /lrecl=10000; */
-/* %INCLUDE "&programPath.DW_BUS_employees.sas" /lrecl=10000;
+/* %INCLUDE "&programPath.DW_BUS_employees.sas" /lrecl=10000; */
 
 proc sql; create table work.St_Saksbehandler as
    select
