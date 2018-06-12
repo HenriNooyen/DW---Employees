@@ -1,5 +1,11 @@
-   proc datasets library=nooyehe;
- /*     delete h_Employee;
+   
+libname dw "F:\DK_DataWarehouse_test";
+
+proc datasets library=dw kill;
+run; 
+
+ /*  proc datasets library=nooyehe;
+      delete h_Employee;
       delete h_Bus_Employee;
       delete h_company_area;
       delete h_Department;
@@ -12,7 +18,7 @@
       delete st_Roles_Base;
       delete s_h_ORK_employee_info;
       delete s_h_BUS_employee_info;
-*/      delete s_h_Ork_employment_info; /*
+      delete s_h_Ork_employment_info; 
       delete s_h_ORK_Company_area_info;
       delete s_h_ORK_dept_info;
       delete l_dept_area;
@@ -21,13 +27,13 @@
       delete s_rh_ork_absence_info;
       delete s_h_PNK_employee_info;
       delete s_h_GuG_employee_info; 
-      delete s_h_PNK_dept_info; */
-   run;
+      delete s_h_PNK_dept_info; 
+   run;	*/
 
 /* -- Staging tables -- */
 
      proc sql;
-      Create table nooyehe.st_Depts_base
+      Create table dw.st_Depts_base
          (
             DeptHashKey char(16)
           , LinkHashKey char(16)
@@ -44,7 +50,7 @@
          );
          
       proc sql;
-       Create table nooyehe.st_Depts_PNK
+       Create table dw.st_Depts_PNK
          (
             DeptHashKey char(16)
           , hd_dept_info char(16)
@@ -61,7 +67,7 @@
 ;
 
    proc sql;
-      Create table nooyehe.st_Areas_Base
+      Create table dw.st_Areas_Base
          (
            AreaID char(10) 
          , Abbr char(16)
@@ -75,7 +81,7 @@
          );
 
    proc sql;
-      Create Table nooyehe.st_Employees_ORK
+      Create Table dw.st_Employees_ORK
          (
            SourceID char(10)
          , CPR_nr char(10)
@@ -99,7 +105,7 @@
          );
 
    proc sql;
-      Create Table nooyehe.st_CaseWorkers_GuG
+      Create Table dw.st_CaseWorkers_GuG
          (
            loginName char(255)
          , SeqNo num(8)
@@ -117,7 +123,7 @@
          );
 
    proc sql;
-      Create Table nooyehe.st_Saksbehandler_PNK
+      Create Table dw.st_Saksbehandler_PNK
          (
            UserID char(20)
          , SeqNo num(8)
@@ -154,7 +160,7 @@
          );
 /*
    proc sql;
-      Create table nooyehe.st_Roles_Base
+      Create table dw.st_Roles_Base
       (
         SourceID char(4)
       , RoleHashKey char(16)
@@ -171,7 +177,7 @@
 /* -- Raw Hub tables start -- */
 
    proc sql;
-      Create Table nooyehe.H_Employee
+      Create Table dw.H_Employee
          (
            H_Key char(16)
          , DW_Bus_Key char(100)
@@ -182,7 +188,7 @@
          );
 
    proc sql;
-      Create Table nooyehe.H_Bus_Employee
+      Create Table dw.H_Bus_Employee
          (
            H_Key char(16)
          , DW_Bus_Key char(100)
@@ -193,7 +199,7 @@
          );
 
    proc sql;
-      Create Table nooyehe.H_Company_Area
+      Create Table dw.H_Company_Area
          (
            H_Key char(16)
          , DW_Bus_Key char(100)
@@ -203,7 +209,7 @@
          );
 
    proc sql;
-      Create Table nooyehe.H_Department
+      Create Table dw.H_Department
          (
            H_Key char(16)
          , DW_Bus_Key char(100)
@@ -211,13 +217,22 @@
          , DW_Insert_DateTime num(8)
          , DW_LogRef num(20)
          );
+
+	proc sql;
+		create table dw.H_customer
+        	H_Key char(16)
+         	, DW_Bus_Key char(100)
+	        , DW_RecordSource char(100)
+	        , DW_Insert_DateTime num(8)
+			, DW_lastSeenDate num(8)
+	        , DW_LogRef num(20)
 
 /* --  RAW Hub tables slut -- */
 
 /* -- RAW sat tables start -- */
 
    proc sql;
-      Create table nooyehe.s_h_Ork_Employee_info
+      Create table dw.s_h_Ork_Employee_info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -230,7 +245,7 @@
       );
       
    proc sql;
-      Create table nooyehe.S_H_ORK_Employment_Info
+      Create table dw.S_H_ORK_Employment_Info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -246,7 +261,7 @@
       );
 
    proc sql;
-      Create table nooyehe.s_h_PNK_employee_info
+      Create table dw.s_h_PNK_employee_info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -277,7 +292,7 @@
       );
 
    proc sql;
-      Create table nooyehe.s_h_GuG_employee_info
+      Create table dw.s_h_GuG_employee_info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -291,7 +306,7 @@
       );
 
    proc sql;
-      Create table nooyehe.s_h_ORK_Company_area_info
+      Create table dw.s_h_ORK_Company_area_info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -304,7 +319,7 @@
       );
 
    proc sql;
-      Create table nooyehe.S_H_ORK_Dept_Info
+      Create table dw.S_H_ORK_Dept_Info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -317,7 +332,7 @@
       );
 
    proc sql;
-      Create table nooyehe.S_H_PNK_Dept_Info
+      Create table dw.S_H_PNK_Dept_Info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -337,7 +352,7 @@
 
 
    proc sql;
-      Create table nooyehe.s_rh_ork_absence_info
+      Create table dw.s_rh_ork_absence_info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -348,12 +363,46 @@
       , Name char(100)
       );
 
+proc sql;
+	create table dw.s_h_pink_cust_business_info
+		(
+		h_key char(16)
+		DW_insert_DateTime num(8),
+		DW_loadEndDate num(8),
+		debitornr,
+		CVR, 
+		)
+		;
+
+proc sql;
+	create table dw.s_h_GUG_cust_privat_info
+		(
+		h_key char(16)
+		DW_insert_DateTime num(8),
+		DW_loadEndDate num(8),
+		debitornr,
+		CPR, 
+		)
+		;
+
+proc sql;
+	create table dw.s_h_GUG_cust_business_info
+		(
+		h_key char(16)
+		DW_insert_DateTime num(8),
+		DW_loadEndDate num(8),
+		debitornr,
+		CVR, 
+		)
+		;
+
+
 /* --  RAW Sat tables slut -- */
 
 /* -- Businesss Sat Tables start -- */
 
    proc sql;
-      Create table nooyehe.s_h_BUS_Employee_info
+      Create table dw.s_h_BUS_Employee_info
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -371,7 +420,7 @@
 /* -- RAW Link table start -- */
 
    proc sql;
-      Create table nooyehe.l_dept_area
+      Create table dw.l_dept_area
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -382,7 +431,7 @@
       );
 
    proc sql;
-      Create table nooyehe.l_emp_dept
+      Create table dw.l_emp_dept
       (
         H_Key char(16)
       , DW_Insert_DateTime num(8)
@@ -392,12 +441,23 @@
       , DeptHashkey char(16)
       );
 
+	proc sql;
+		create table dw.l_a_emp_cust
+		(
+		EmplCustHashKey char(16),
+      , DW_Insert_DateTime num(8)
+      , DW_RecordSource char(100)
+      , DW_LogRef num(20)
+      , EmployeeHashkey char(16)
+      , CustHashkey char(16)
+		);
+
 /* -- Raw Link tables end -- */
 
 /* -- Reference hub tables start -- */
 
    proc sql;
-      create table nooyehe.rh_ork_absence_codes
+      create table dw.rh_ork_absence_codes
       (
            H_Key char(16)
          , DW_Bus_Key char(100)
@@ -408,7 +468,7 @@
 
 /* -- Reference tables slut -- */
 
-%let InputPath = \\groupad1.com\Home\Denmark-Horsens\nooyehe\Data\report_files\input_files\;
-%let ProgramPath = \\groupad1.com\Home\Denmark-Horsens\nooyehe\Data\sas_programs\;
+/* %let InputPath = \\groupad1.com\Home\Denmark-Horsens\nooyehe\Data\report_files\input_files\; */
+/* %let ProgramPath = \\groupad1.com\Home\Denmark-Horsens\nooyehe\Data\sas_programs\; */
 
 /* %INCLUDE "&ProgramPath.DW_Restore_content_1_0.sas" /lrecl=10000; */
